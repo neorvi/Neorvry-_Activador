@@ -1,0 +1,20 @@
+name: Run Datadog Synthetic Tests
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 * * * *' # Ejecuta cada hora
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Run Datadog Synthetic Tests
+        uses: DataDog/synthetics-ci-github-action@v1.0.0
+        with:
+          api_key: ${{ secrets.DD_API_KEY }}
+          app_key: ${{ secrets.DD_APP_KEY }}
+          config_path: ./synthetics.json
